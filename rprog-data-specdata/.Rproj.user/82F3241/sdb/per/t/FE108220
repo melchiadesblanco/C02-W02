@@ -1,0 +1,17 @@
+{
+    "contents" : "corr <- function(directory, threshold = 0) {\n  ## 'directory' is a character vector of length 1 indicating\n  ## the location of the CSV files\n  \n  ## 'threshold' is a numeric vector of length 1 indicating the\n  ## number of completely observed observations (on all\n  ## variables) required to compute the correlation between\n  ## nitrate and sulfate; the default is 0\n  \n  ## Return a numeric vector of correlations\n  ## NOTE: Do not round the result!\n\n  \n  ##source(\"complete.R\")\n    \n  if(is.na(directory) || is.na(threshold) ) {\n    NA\n  } else {\n    cases_frame <- complete(directory)\n    cases_greater <- cases_frame[cases_frame$nobs > threshold,1]\n    all_file_names <- list.files(path = directory,'*.csv', T, T)\n    correlations <- rep(NA,length(cases_greater))\n    for (i in cases_greater) {\n      fileData <- (read.csv(all_file_names[i]))\n      cases_frame <- complete.cases(fileData)\n      v_Sulfate <- fileData[cases_frame, 2]\n      v_Nitrate <- fileData[cases_frame, 3]\n      correlations[i] <- cor(x = v_Sulfate, y = v_Nitrate)\n    }\n    correlations <- correlations[complete.cases(correlations)]\n    if (length(correlations) == 0) {\n      returnvalue <- numeric()\n    }\n    else {\n      returnvalue <- correlations\n    }\n    returnvalue\n  }\n}",
+    "created" : 1437227354274.000,
+    "dirty" : true,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "2539047469",
+    "id" : "FE108220",
+    "lastKnownWriteTime" : 1437232660,
+    "path" : "C:/Users/Ludo/Desktop/WorkingDirectory/Repository/C02-W02/rprog-data-specdata/corr.R",
+    "project_path" : "corr.R",
+    "properties" : {
+    },
+    "relative_order" : 3,
+    "source_on_save" : true,
+    "type" : "r_source"
+}
